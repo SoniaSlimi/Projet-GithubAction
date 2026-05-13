@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install Newman
         run: |
@@ -20,13 +20,10 @@ jobs:
 
       - name: Run Newman
         run: |
-          newman run "https://api.postman.com/collections/${{ secrets.COLLECTION_ID }}?access_key=${{ secrets.POSTMAN_API_KEY }}"
-            --environment "Test.postman_environment.json"
-            --reporters cli,htmlextra
-            --reporter-htmlextra-export rapport.html
+          newman run "https://api.postman.com/collections/${{ secrets.COLLECTION_ID }}?access_key=${{ secrets.POSTMAN_API_KEY }}" --environment "Test.postman_environnement.json" --reporters cli,htmlextra --reporter-htmlextra-export rapport.html
 
       - name: Upload rapport
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: rapport-newman

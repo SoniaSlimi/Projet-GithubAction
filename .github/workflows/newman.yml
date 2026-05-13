@@ -24,7 +24,7 @@ jobs:
       - name: Run Newman
         run: |
           newman run "https://api.postman.com/collections/${{ secrets.COLLECTION_ID }}?access_key=${{ secrets.POSTMAN_API_KEY }}" \
-            --environment "Test.postman_environnement.json" \
+            --environment "Test.postman_environment.json" \
             --reporters cli,htmlextra \
             --reporter-htmlextra-export rapport.html
         continue-on-error: true

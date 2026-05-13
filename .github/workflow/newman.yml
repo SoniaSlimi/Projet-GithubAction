@@ -1,0 +1,33 @@
+name: Newman Tests
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  newman-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Newman
+        run: |
+          npm install -g newman
+          npm install -g newman-reporter-htmlextra
+
+      - name: Run Newman
+        run: |
+          newman run "https://api.postman.com/collections/${{ secrets.COLLECTION_ID }}?access_key=${{ secrets.POSTMAN_API_KEY }}"
+            --environment "Test.postman_environment.json"
+            --reporters cli,htmlextra
+            --reporter-htmlextra-export rapport.html
+
+      - name: Upload rapport
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: rapport-newman
+          path: rapport.html
